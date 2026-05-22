@@ -21,7 +21,7 @@
       overflow-x: hidden;
     }
 
-    /* Efeito de estádio - holofotes animados */
+
     body::before {
       content: '';
       position: fixed;
@@ -34,7 +34,7 @@
       z-index: 0;
     }
 
-    /* Partículas de confete flutuante */
+
     @keyframes floatConfetti {
       0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
       10% { opacity: 0.7; }
@@ -60,7 +60,7 @@
       z-index: 2;
     }
 
-    /* Cabeçalho animado */
+
     .hero {
       text-align: center;
       margin-bottom: 2rem;
@@ -96,7 +96,7 @@
       border-right: 3px solid gold;
     }
 
-    /* Contador regressivo */
+
     .countdown {
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(12px);
@@ -121,7 +121,6 @@
       color: #FFD966;
     }
 
-    /* Cards de formulário e mural */
     .glass-card {
       background: rgba(30, 30, 20, 0.75);
       backdrop-filter: blur(12px);
@@ -203,7 +202,7 @@
       transform: scale(0.98);
     }
 
-    /* Mural estilo post-it flutuante */
+
     .mural-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -348,10 +347,10 @@
 </div>
 
 <script>
-  // ================= CONFIGURAÇÕES =================
+
   let cartas = [];
 
-  // Carregar dados salvos
+
   function carregarCartas() {
     const salvas = localStorage.getItem("cartasCopa2026");
     cartas = salvas ? JSON.parse(salvas) : [];
@@ -371,7 +370,7 @@
     setTimeout(() => toast.remove(), 3200);
   }
 
-  // Mural: filtrar cartas com data <= hoje
+
   function atualizarMural() {
     const hoje = new Date().toISOString().slice(0,10);
     const cartasVisiveis = cartas.filter(c => c.dataAbertura <= hoje);
@@ -417,7 +416,7 @@
     });
   }
   
-  // Salvar nova carta
+
   document.getElementById("salvarCarta").addEventListener("click", () => {
     const nome = document.getElementById("nome").value.trim();
     const cidade = document.getElementById("cidade").value.trim();
@@ -452,7 +451,7 @@
     
     cartas.push(novaCarta);
     salvarCartas();
-    // Limpar campos
+  
     document.getElementById("nome").value = "";
     document.getElementById("cidade").value = "";
     document.getElementById("conteudo").value = "";
@@ -476,9 +475,9 @@
     }
   }
   
-  // CONTADOR REGRESSIVO: 11/06/2026 (primeiro jogo)
+
   function atualizarContador() {
-    const alvo = new Date(2026, 5, 11, 12, 0, 0); // 11 de junho de 2026 - meio-dia
+    const alvo = new Date(2026, 5, 11, 12, 0, 0); 
     const agora = new Date();
     const diff = alvo - agora;
     if(diff <= 0) {
@@ -498,10 +497,10 @@
   setInterval(atualizarContador, 1000);
   atualizarContador();
   
-  // Inicializar sistema
+
   carregarCartas();
   
-  // Adicionar confetes aleatórios no fundo (sutil)
+
   setInterval(() => {
     if(Math.random() < 0.2) criarConfetesTemporarios();
   }, 12000);
