@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🏆 Mural do Futuro | Copa 2026</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 10% 20%, #0a2f0a, #041a04);
+      min-height: 100vh;
+      color: #f0f0f0;
+      padding: 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Efeito de estádio - holofotes animados */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(255,215,0,0.02) 0px, rgba(255,215,0,0.02) 2px, transparent 2px, transparent 8px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Partículas de confete flutuante */
+    @keyframes floatConfetti {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 12px;
+      background: linear-gradient(135deg, gold, #ff7300);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      animation: floatConfetti linear infinite;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Cabeçalho animado */
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(135deg, #FFD966, #FFB347, #FF6B35);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 180, 60, 0.5);
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 5px rgba(255,200,100,0.3); }
+      100% { text-shadow: 0 0 25px rgba(255,200,100,0.9); }
+    }
+
+    .sub {
+      font-size: 1.2rem;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      border-left: 3px solid gold;
+      border-right: 3px solid gold;
+    }
+
+    /* Contador regressivo */
+    .countdown {
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 60px;
+      padding: 0.6rem 1.2rem;
+      display: inline-flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      border: 1px solid rgba(255,215,0,0.4);
+    }
+    .countdown span {
+      font-weight: bold;
+      background: #1f2a0e;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      font-family: monospace;
+      font-size: 1.3rem;
+    }
+    .countdown strong {
+      color: #FFD966;
+    }
+
+    /* Cards de formulário e mural */
+    .glass-card {
+      background: rgba(30, 30, 20, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,215,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+      border-color: rgba(255,215,0,0.5);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+    .form-group {
+      flex: 1 1 200px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      color: #FFE3A4;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(20, 20, 15, 0.8);
+      border: 1px solid #f5b642;
+      border-radius: 24px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #ffcc44;
+      box-shadow: 0 0 10px rgba(255,200,0,0.5);
+      background: #2a2a1c;
+    }
+    button {
+      background: linear-gradient(95deg, #e6b422, #d48d1f);
+      border: none;
+      color: #1f2a0a;
+      font-weight: bold;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      margin-top: 1rem;
+      width: 100%;
+    }
+    button:hover {
+      transform: scale(1.02);
+      background: linear-gradient(95deg, #ffcc44, #f5a623);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      color: #000;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Mural estilo post-it flutuante */
+    .mural-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.5rem;
+    }
+    .postit {
+      background: #fff9e8;
+      padding: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 8px 12px 15px rgba(0,0,0,0.3);
+      transform: rotate(var(--rot, -1deg));
+      transition: all 0.25s ease;
+      animation: floatCard 3s infinite alternate ease-in-out;
+      color: #2c2c1a;
+      position: relative;
+    }
+    @keyframes floatCard {
+      0% { transform: rotate(var(--rot, -1deg)) translateY(0px); }
+      100% { transform: rotate(var(--rot, -1deg)) translateY(-6px); }
+    }
+    .postit:hover {
+      transform: rotate(0deg) scale(1.02);
+      box-shadow: 12px 16px 20px rgba(0,0,0,0.4);
+    }
+    .tipo-badge {
+      display: inline-block;
+      background: #c49a2b;
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      margin-bottom: 0.8rem;
+    }
+    .msg {
+      font-style: italic;
+      font-size: 1rem;
+      margin: 0.7rem 0;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .autor {
+      border-top: 1px dashed #b8872e;
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      font-size: 0.8rem;
+      text-align: right;
+      font-weight: 500;
+    }
+    .data-abertura {
+      font-size: 0.65rem;
+      opacity: 0.7;
+      margin-top: 0.5rem;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f3a1a;
+      backdrop-filter: blur(12px);
+      color: #FFE484;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      border-left: 6px solid gold;
+      z-index: 999;
+      font-weight: bold;
+      box-shadow: 0 5px 15px black;
+      animation: fadeOut 3s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      h1 { font-size: 2rem; }
+      .countdown { gap: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <h1>🏟️ MURAL DO FUTURO 🏆</h1>
+    <div class="sub">Cartas que viajam no tempo… até a Copa 2026</div>
+    <div class="countdown" id="countdownBox">
+      <strong>⏳ ABERTURA DA COPA:</strong> <span id="days">00</span>d <span id="hours">00</span>h <span id="mins">00</span>m
+    </div>
+  </div>
+
+  <div class="glass-card">
+    <h3>✍️ Escreva sua carta para o futuro (será lacrada até a data escolhida)</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>🌟 Seu nome/apelido</label>
+        <input type="text" id="nome" placeholder="Ex: Louca por Futebol">
+      </div>
+      <div class="form-group">
+        <label>📍 Cidade / País</label>
+        <input type="text" id="cidade" placeholder="São Paulo, Brasil">
+      </div>
+      <div class="form-group">
+        <label>📬 Tipo de carta</label>
+        <select id="tipo">
+          <option value="palpite">⚽ Palpite</option>
+          <option value="promessa">🤝 Promessa de torcedor</option>
+          <option value="desculpa">😅 Desculpa antecipada</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📅 Data para abrir (dd/mm/aaaa)</label>
+        <input type="date" id="dataAbertura" value="2026-07-11">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>💬 Sua mensagem secreta</label>
+      <textarea rows="3" id="conteudo" placeholder="Ex: Prometo que usarei a camisa do México até a final... ou "></textarea>
+    </div>
+    <button id="salvarCarta">💌 ENVIAR AO FUTURO</button>
+  </div>
+
+  <div class="glass-card">
+    <h2>📬 Mural do presente (cartas já liberadas)</h2>
+    <div id="muralLista" class="mural-grid">
+      <div class="postit" style="--rot:0deg;">✨ Nenhuma carta liberada ainda. Escreva a sua! ✨</div>
+    </div>
+  </div>
+  <footer>🔮 As cartas só aparecem publicamente APÓS a data escolhida. O futuro te espera.</footer>
+</div>
+
+<script>
+  // ================= CONFIGURAÇÕES =================
+  let cartas = [];
+
+  // Carregar dados salvos
+  function carregarCartas() {
+    const salvas = localStorage.getItem("cartasCopa2026");
+    cartas = salvas ? JSON.parse(salvas) : [];
+    atualizarMural();
+  }
+
+  function salvarCartas() {
+    localStorage.setItem("cartasCopa2026", JSON.stringify(cartas));
+  }
+
+  function showToast(mensagem, cor = "#1f3a1a") {
+    const toast = document.createElement("div");
+    toast.className = "toast-msg";
+    toast.innerText = mensagem;
+    toast.style.background = cor;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3200);
+  }
+
+  // Mural: filtrar cartas com data <= hoje
+  function atualizarMural() {
+    const hoje = new Date().toISOString().slice(0,10);
+    const cartasVisiveis = cartas.filter(c => c.dataAbertura <= hoje);
+    const container = document.getElementById("muralLista");
+    
+    if(cartasVisiveis.length === 0) {
+      container.innerHTML = `<div class="postit" style="--rot:0deg;">📭 Silêncio do futuro... Volte perto da Copa 2026 para ler as cartas que se abrirão! 📭</div>`;
+      return;
+    }
+    
+    container.innerHTML = cartasVisiveis.map(carta => {
+      let tipoLabel = "";
+      if(carta.tipo === "palpite") tipoLabel = "⚽ PALPITE";
+      else if(carta.tipo === "promessa") tipoLabel = "🤝 PROMESSA";
+      else tipoLabel = "😅 DESCULPA";
+      
+      const rotacao = (Math.random() * 3 - 1.5).toFixed(1);
+      return `
+        <div class="postit" style="--rot:${rotacao}deg;">
+          <div class="tipo-badge">${tipoLabel}</div>
+          <div class="msg">“${escapeHtml(carta.conteudo)}”</div>
+          <div class="autor">— ${escapeHtml(carta.nome)} ${carta.cidade ? `• ${escapeHtml(carta.cidade)}` : ''}</div>
+          <div class="data-abertura">📅 Aberta desde ${formatarData(carta.dataAbertura)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+  
+  function formatarData(dataISO) {
+    const partes = dataISO.split("-");
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+  }
+  
+  function escapeHtml(texto) {
+    if(!texto) return '';
+    return texto.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+  
+  // Salvar nova carta
+  document.getElementById("salvarCarta").addEventListener("click", () => {
+    const nome = document.getElementById("nome").value.trim();
+    const cidade = document.getElementById("cidade").value.trim();
+    const tipo = document.getElementById("tipo").value;
+    let dataAbertura = document.getElementById("dataAbertura").value;
+    const conteudo = document.getElementById("conteudo").value.trim();
+    
+    if(!nome || !conteudo) {
+      showToast("❌ Preencha pelo menos nome e mensagem!", "#7a2e2e");
+      return;
+    }
+    if(!dataAbertura) {
+      showToast("📅 Escolha uma data futura para abrir a carta!", "#7a5a1a");
+      return;
+    }
+    
+    const hoje = new Date().toISOString().slice(0,10);
+    if(dataAbertura < hoje) {
+      showToast("⚠️ A data precisa ser hoje ou no futuro! Escolha a partir de agora.", "#7a5a1a");
+      return;
+    }
+    
+    const novaCarta = {
+      id: Date.now().toString() + Math.random(),
+      nome: nome,
+      cidade: cidade,
+      tipo: tipo,
+      conteudo: conteudo,
+      dataAbertura: dataAbertura,
+      dataEnvio: new Date().toISOString()
+    };
+    
+    cartas.push(novaCarta);
+    salvarCartas();
+    // Limpar campos
+    document.getElementById("nome").value = "";
+    document.getElementById("cidade").value = "";
+    document.getElementById("conteudo").value = "";
+    document.getElementById("dataAbertura").value = "2026-07-11";
+    
+    showToast(`✅ Carta guardada! Aparecerá no mural a partir de ${formatarData(dataAbertura)}`, "#1f5a2a");
+    atualizarMural();
+    criarConfetesTemporarios();
+  });
+  
+  function criarConfetesTemporarios() {
+    for(let i = 0; i < 40; i++) {
+      const conf = document.createElement('div');
+      conf.classList.add('confetti');
+      conf.style.left = Math.random() * 100 + '%';
+      conf.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      conf.style.animationDelay = Math.random() * 0.5 + 's';
+      conf.style.background = `hsl(${Math.random() * 60 + 40}, 80%, 55%)`;
+      document.body.appendChild(conf);
+      setTimeout(() => conf.remove(), 3000);
+    }
+  }
+  
+  // CONTADOR REGRESSIVO: 11/06/2026 (primeiro jogo)
+  function atualizarContador() {
+    const alvo = new Date(2026, 5, 11, 12, 0, 0); // 11 de junho de 2026 - meio-dia
+    const agora = new Date();
+    const diff = alvo - agora;
+    if(diff <= 0) {
+      document.getElementById("days").innerText = "00";
+      document.getElementById("hours").innerText = "00";
+      document.getElementById("mins").innerText = "00";
+      return;
+    }
+    const dias = Math.floor(diff / (1000*60*60*24));
+    const horas = Math.floor((diff % (86400000)) / (3600000));
+    const minutos = Math.floor((diff % 3600000) / 60000);
+    document.getElementById("days").innerText = dias < 10 ? "0"+dias : dias;
+    document.getElementById("hours").innerText = horas < 10 ? "0"+horas : horas;
+    document.getElementById("mins").innerText = minutos < 10 ? "0"+minutos : minutos;
+  }
+  
+  setInterval(atualizarContador, 1000);
+  atualizarContador();
+  
+  // Inicializar sistema
+  carregarCartas();
+  
+  // Adicionar confetes aleatórios no fundo (sutil)
+  setInterval(() => {
+    if(Math.random() < 0.2) criarConfetesTemporarios();
+  }, 12000);
+</script>
+</body>
+</html>
